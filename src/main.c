@@ -134,12 +134,13 @@ int arrest(TrenchCoat *tc, Stash *s) {
     
 
 
-void print_rule() {
+int print_rule() {
     FILE *rlptr;
     rlptr = fopen("rules.txt", "r");
 
     if (rlptr == NULL) {
         perror("Not able to find rules.txt");
+        return EXIT_FAILURE;
     }
 
     char rules[100];
