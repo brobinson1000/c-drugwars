@@ -10,6 +10,14 @@
 unsigned int day = 1;
 
 typedef enum {
+    EASY,
+    MEDIUM,
+    HARD,
+    SUPER_HARD
+} Game_Modes;
+
+
+typedef enum {
     DRUG_WEED,
     DRUG_COCAINE,
     DRUG_HEROIN,
@@ -89,6 +97,7 @@ typedef enum {
     PRICE_LUXURY
 } PriceTier;
 
+
 void purchase_travel(TrenchCoat *tc,  location l) {
 
     int total_cost = rand() % 500;
@@ -103,6 +112,13 @@ void purchase_travel(TrenchCoat *tc,  location l) {
     increment_day();
     printf("Traveling to %s\n", l.town); 
 };
+
+    
+
+
+
+
+
 
 int get_random_price(PriceTier tier) {
     switch(tier) {
@@ -153,6 +169,29 @@ int print_rule() {
 }
 
 
+void game_mode_map(Game_Modes gm) {
+    
+    switch(gm) {
+
+        case EASY:
+            printf("easy");
+            break;
+        case MEDIUM:
+            printf("medium");
+            break;
+        case HARD:
+            printf("hard");
+            break;
+        case SUPER_HARD:
+            printf("super hard");
+        default:
+            break;
+    }
+}
+
+
+
+
 
 
 
@@ -167,6 +206,10 @@ int print_rule() {
 int main() {
     Stash s;
     TrenchCoat tc;
+    Game_Modes gm = EASY;
+
+    game_mode_map(gm);
+
 
     tc.cash = 1000000000;
 
