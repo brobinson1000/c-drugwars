@@ -40,6 +40,52 @@ typedef struct{
 } TrenchCoat;
 
 
+enum Reputation {
+    TERRIBLE,
+    BAD,
+    NEUTRAL,
+    GOOD,
+    EXCELLENT
+};
+
+
+typedef struct{
+    char town[40];
+    enum Reputation rp;
+} location;
+
+typedef enum {
+    PRICE_CHEAP,
+    PRICE_NORMAL,
+    PRICE_EXPENSIVE,
+    PRICE_LUXURY
+} PriceTier;
+
+
+typedef struct {
+    char event[20];
+    int (*action) (TrenchCoat *tc);
+} PoliceEvent;
+
+int print_rule() {
+    FILE *rlptr;
+    rlptr = fopen("rules.txt", "r");
+
+    if (rlptr == NULL) {
+        perror("Not able to find rules.txt");
+        return EXIT_FAILURE;
+    }
+
+    char rules[100];
+    
+    while(fgets(rules, 100, rlptr)) {
+        printf("%s", rules);
+    }
+
+    fclose(rlptr);
+};
+
+
 void loan_shark_loan(Stash *s, int amount) {
     s->bank += amount;
     s->debt += amount;
@@ -70,19 +116,8 @@ void purchase_drug(TrenchCoat *tc, Drug drug, int quantity, int price) {
 
 
 
-enum Reputation {
-    TERRIBLE,
-    BAD,
-    NEUTRAL,
-    GOOD,
-    EXCELLENT
-};
 
 
-typedef struct{
-    char town[40];
-    enum Reputation rp;
-} location;
 
 
 
@@ -90,12 +125,6 @@ int increment_day() {
     day += 1;
 }
 
-typedef enum {
-    PRICE_CHEAP,
-    PRICE_NORMAL,
-    PRICE_EXPENSIVE,
-    PRICE_LUXURY
-} PriceTier;
 
 
 void purchase_travel(TrenchCoat *tc,  location l) {
@@ -129,10 +158,6 @@ int get_random_price(PriceTier tier) {
     }
 }
 
-typedef struct {
-    char event[20];
-    int (*action) (TrenchCoat *tc);
-} PoliceEvent;
 
 int police_encounter(TrenchCoat *tc, Stash *s) {
     memset(&tc, 0, sizeof(tc));
@@ -150,23 +175,6 @@ int arrest(TrenchCoat *tc, Stash *s) {
     
 
 
-int print_rule() {
-    FILE *rlptr;
-    rlptr = fopen("rules.txt", "r");
-
-    if (rlptr == NULL) {
-        perror("Not able to find rules.txt");
-        return EXIT_FAILURE;
-    }
-
-    char rules[100];
-    
-    while(fgets(rules, 100, rlptr)) {
-        printf("%s", rules);
-    }
-
-    fclose(rlptr);
-}
 
 
 void game_mode_map(Game_Modes gm) {
